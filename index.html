@@ -64,7 +64,7 @@ footer{text-align:center;color:#607487;padding:30px}
 
 <section class="step card" id="s5">
 <h2>Business Name Availability</h2>
-<div class="success"><b>SIMULATED RESULT:</b><br>“MILA’S HOMEMADE TREATS” is available for this classroom demonstration.</div>
+<div class="success"><b>SIMULATED RESULT:</b><br>“<span id="availBiz">MILA’S HOMEMADE TREATS</span>” is available for this classroom demonstration.</div>
 <p class="small muted">This result is fictional and does not check the real DTI database.</p>
 <div class="actions"><button class="btn" onclick="go(6)">Proceed</button></div>
 </section>
@@ -72,7 +72,7 @@ footer{text-align:center;color:#607487;padding:30px}
 <section class="step card" id="s6">
 <h2>Reference Code</h2>
 <p>Your simulated registration reference code is:</p>
-<div class="code">DEMO-BNRS-2026-7K4P</div>
+<div class="code" id="refCode">DEMO-BNRS-2026-7K4P</div>
 <p class="muted">Fictional reference code — not valid for any government transaction.</p>
 <div class="actions"><button class="btn" onclick="go(7)">Continue to Business Details</button></div>
 </section>
@@ -87,7 +87,7 @@ footer{text-align:center;color:#607487;padding:30px}
 
 <section class="step card" id="s8">
 <h2>Review and Confirm Undertaking</h2>
-<div class="notice"><b>Applicant:</b> MILA SANTOS<br><b>Business Name:</b> MILA’S HOMEMADE TREATS<br><b>Scope:</b> City/Municipality<br><b>Address:</b> 123 Sample Street, Demo City, Philippines</div>
+<div class="notice"><b>Applicant:</b> <span id="reviewOwner">MILA SANTOS</span><br><b>Business Name:</b> <span id="reviewBiz">MILA’S HOMEMADE TREATS</span><br><b>Scope:</b> <span id="reviewScope">City/Municipality</span><br><b>Address:</b> <span id="reviewAddress">123 Sample Street, Demo City, Philippines</span></div>
 <label class="check"><input type="checkbox" id="undertake"> I confirm that the information shown is for this classroom simulation.</label>
 <div class="actions"><button class="btn secondary" onclick="go(7)">Back</button><button class="btn" onclick="nextIf('undertake',9)">Confirm</button></div>
 </section>
@@ -109,9 +109,9 @@ footer{text-align:center;color:#607487;padding:30px}
 <section class="step card" id="done">
 <div class="cert">
 <h3>DTI BUSINESS NAME REGISTRATION</h3><p><b>CLASSROOM SIMULATION CERTIFICATE</b></p>
-<div class="line">Business Name: MILA’S HOMEMADE TREATS</div>
-<div class="line">Owner: MILA SANTOS</div>
-<div class="line">Reference: DEMO-BNRS-2026-7K4P</div>
+<div class="line">Business Name: <span id="certBiz">MILA’S HOMEMADE TREATS</span></div>
+<div class="line">Owner: <span id="certOwner">MILA SANTOS</span></div>
+<div class="line">Reference: <span id="certRef">DEMO-BNRS-2026-7K4P</span></div>
 <p class="small">THIS DOCUMENT IS FICTIONAL AND HAS NO LEGAL OR GOVERNMENT VALIDITY.</p>
 </div>
 <h1 style="text-align:center;margin-top:28px">DTI BUSINESS NAME REGISTRATION — SIMULATION COMPLETE</h1>
@@ -123,10 +123,61 @@ footer{text-align:center;color:#607487;padding:30px}
 <script>
 let current=1;
 const labels=["OPEN BNRS","TERMS","OWNER INFO","BUSINESS NAME","AVAILABILITY","REFERENCE","DETAILS","REVIEW","PAYMENT","CERTIFICATE"];
-function render(){document.querySelectorAll('.step').forEach(x=>x.classList.remove('active'));let id=current===11?'done':'s'+current;document.getElementById(id).classList.add('active');document.getElementById('progress').innerHTML=labels.map((x,i)=>`<span class="pill ${i+1<=current?'on':''}">STEP ${String(i+1).padStart(2,'0')}</span>`).join('');window.scrollTo({top:0,behavior:'smooth'});}
-function go(n){current=n;render()}
-function nextIf(id,n){if(document.getElementById(id).checked)go(n);else alert("Please check the demo confirmation box first.")}
-function downloadCert(){current=11;render();const text=`DTI BUSINESS NAME REGISTRATION\\nCLASSROOM SIMULATION CERTIFICATE\\n\\nBusiness Name: MILA’S HOMEMADE TREATS\\nOwner: MILA SANTOS\\nReference: DEMO-BNRS-2026-7K4P\\n\\nTHIS DOCUMENT IS FICTIONAL AND HAS NO LEGAL OR GOVERNMENT VALIDITY.`;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));a.download='DTI-Demo-Certificate.txt';a.click();}
+let demoReference="DEMO-BNRS-2026-7K4P";
+
+function val(id){const el=document.getElementById(id);return el?el.value.trim():"";}
+function ownerName(){return (val("first")+" "+val("last")).trim() || "DEMO APPLICANT";}
+function businessName(){return val("biz") || "DEMO BUSINESS NAME";}
+function scopeName(){const el=document.querySelector("#s4 select");return el?el.value:"City/Municipality";}
+function addressName(){const inputs=document.querySelectorAll("#s7 input");return inputs.length?inputs[0].value.trim():"123 Sample Street, Demo City, Philippines";}
+
+function makeReference(){
+  const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let code="";
+  for(let i=0;i<4;i++) code+=chars[Math.floor(Math.random()*chars.length)];
+  demoReference="DEMO-BNRS-"+new Date().getFullYear()+"-"+code;
+}
+
+function syncDemoData(){
+  const owner=ownerName(), biz=businessName(), scope=scopeName(), address=addressName();
+  const set=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value;};
+  set("availBiz",biz);
+  set("refCode",demoReference);
+  set("reviewOwner",owner);
+  set("reviewBiz",biz);
+  set("reviewScope",scope);
+  set("reviewAddress",address);
+  set("certOwner",owner);
+  set("certBiz",biz);
+  set("certRef",demoReference);
+}
+
+function render(){
+  syncDemoData();
+  document.querySelectorAll('.step').forEach(x=>x.classList.remove('active'));
+  let id=current===11?'done':'s'+current;
+  document.getElementById(id).classList.add('active');
+  document.getElementById('progress').innerHTML=labels.map((x,i)=>`<span class="pill ${i+1<=current?'on':''}">STEP ${String(i+1).padStart(2,'0')}</span>`).join('');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(n){if(n===6)makeReference();current=n;render();}
+function nextIf(id,n){if(document.getElementById(id).checked)go(n);else alert("Please check the demo confirmation box first.");}
+function downloadCert(){
+  syncDemoData();
+  current=11;render();
+  const text=`DTI BUSINESS NAME REGISTRATION
+CLASSROOM SIMULATION CERTIFICATE
+
+Business Name: ${businessName()}
+Owner: ${ownerName()}
+Reference: ${demoReference}
+
+THIS DOCUMENT IS FICTIONAL AND HAS NO LEGAL OR GOVERNMENT VALIDITY.`;
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));
+  a.download='DTI-Demo-Certificate.txt';
+  a.click();
+}
 render();
 </script>
 </body></html>
