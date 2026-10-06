@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DTI BNRS — Classroom Simulation</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#eef3f8;color:#18324a}
+.demo{position:fixed;top:0;left:0;right:0;background:#b42318;color:#fff;text-align:center;font-weight:700;font-size:13px;padding:8px;z-index:20}
+header{margin-top:34px;background:#075985;color:white;padding:18px 6%;box-shadow:0 2px 7px #0002}
+.brand{font-size:22px;font-weight:700}.sub{font-size:12px;opacity:.9;margin-top:4px}
+main{max-width:1050px;margin:28px auto;padding:0 18px}.card{background:white;border-radius:10px;box-shadow:0 3px 14px #0001;padding:28px;margin-bottom:20px}
+h1{font-size:28px;margin-top:0}h2{font-size:21px;margin-top:0}.muted{color:#607487}.step{display:none}.step.active{display:block}
+.btn{background:#075985;color:#fff;border:0;border-radius:6px;padding:12px 20px;font-weight:700;cursor:pointer}.btn:hover{background:#064b70}.secondary{background:#64748b}
+input,select,textarea{width:100%;padding:11px;border:1px solid #c7d2dc;border-radius:5px;margin:6px 0 15px;font-size:15px}
+label{font-weight:700;font-size:14px}.check{display:flex;gap:9px;align-items:flex-start;margin:15px 0}.check input{width:auto;margin:3px 0}
+.progress{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:18px}.pill{font-size:11px;padding:6px 9px;border-radius:20px;background:#dbe7ef}.pill.on{background:#075985;color:#fff}
+.notice{padding:12px;border-left:4px solid #075985;background:#eff8ff;margin:15px 0}.success{padding:15px;background:#ecfdf3;border:1px solid #a7f3d0;border-radius:7px;color:#065f46}
+.terms{height:250px;overflow:auto;border:1px solid #ccd6df;padding:15px;background:#fafafa;line-height:1.55}
+.code{font-size:25px;font-weight:800;letter-spacing:2px;background:#f1f5f9;padding:15px;text-align:center;margin:15px 0}
+.cert{border:5px double #075985;padding:35px;text-align:center;background:#fffdf5}.cert h3{font-size:25px}.cert .line{margin:12px auto;max-width:550px;border-bottom:1px solid #aaa;padding:8px}
+footer{text-align:center;color:#607487;padding:30px}
+.small{font-size:12px}.actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="demo">SIMULATION / DEMO — NOT AN ACTUAL GOVERNMENT TRANSACTION</div>
+<header><div class="brand">Department of Trade and Industry — BNRS</div><div class="sub">CLASSROOM MOCK INTERFACE • No government transaction is performed</div></header>
+<main>
+<div class="progress" id="progress"></div>
+
+<section class="step active card" id="s1">
+<h1>Business Name Registration System</h1>
+<p class="muted">This classroom-only mockup demonstrates the general flow of an online business name registration.</p>
+<div class="notice"><b>Demo mode:</b> Every button and result on this page is simulated. No information is transmitted to DTI.</div>
+<button class="btn" onclick="go(2)">Business Name Registration</button>
+</section>
+
+<section class="step card" id="s2">
+<h2>Terms and Conditions</h2>
+<div class="terms">
+<b>CLASSROOM SIMULATION TERMS</b><p>This is a fictional educational interface. It is not connected to the Philippine government, DTI, BNRS, payment providers, or any government database.</p><p>All names, addresses, reference numbers, fees, and results shown in this demonstration are fictional and for classroom use only.</p><p>Do not enter real personal, financial, identification, or payment information.</p><p>By continuing, the user acknowledges that this is a demonstration and not an actual registration.</p>
+</div>
+<label class="check"><input type="checkbox" id="agree"> I have read and agree to the simulation terms.</label>
+<div class="actions"><button class="btn secondary" onclick="go(1)">Back</button><button class="btn" onclick="nextIf('agree',3)">Continue</button></div>
+</section>
+
+<section class="step card" id="s3">
+<h2>Owner Information</h2>
+<p class="muted">Use fictional information only.</p>
+<label>First Name</label><input value="MILA" id="first">
+<label>Last Name</label><input value="SANTOS" id="last">
+<label>Email Address</label><input value="mila.demo@example.test">
+<label>Mobile Number</label><input value="0917-000-0000">
+<div class="actions"><button class="btn secondary" onclick="go(2)">Back</button><button class="btn" onclick="go(4)">Continue</button></div>
+</section>
+
+<section class="step card" id="s4">
+<h2>Territorial Scope and Business Name</h2>
+<label>Territorial Scope</label><select><option>City/Municipality</option><option>Barangay</option><option>Regional</option><option>National</option></select>
+<label>Business Name</label><input value="MILA’S HOMEMADE TREATS" id="biz">
+<div class="actions"><button class="btn secondary" onclick="go(3)">Back</button><button class="btn" onclick="go(5)">Check Business Name</button></div>
+</section>
+
+<section class="step card" id="s5">
+<h2>Business Name Availability</h2>
+<div class="success"><b>SIMULATED RESULT:</b><br>“MILA’S HOMEMADE TREATS” is available for this classroom demonstration.</div>
+<p class="small muted">This result is fictional and does not check the real DTI database.</p>
+<div class="actions"><button class="btn" onclick="go(6)">Proceed</button></div>
+</section>
+
+<section class="step card" id="s6">
+<h2>Reference Code</h2>
+<p>Your simulated registration reference code is:</p>
+<div class="code">DEMO-BNRS-2026-7K4P</div>
+<p class="muted">Fictional reference code — not valid for any government transaction.</p>
+<div class="actions"><button class="btn" onclick="go(7)">Continue to Business Details</button></div>
+</section>
+
+<section class="step card" id="s7">
+<h2>Business Details</h2>
+<label>Business Address</label><input value="123 Sample Street, Demo City, Philippines">
+<label>Business Activity</label><textarea>Homemade desserts and packaged snack products (classroom example).</textarea>
+<label>Contact Email</label><input value="mila.demo@example.test">
+<div class="actions"><button class="btn secondary" onclick="go(6)">Back</button><button class="btn" onclick="go(8)">Review Information</button></div>
+</section>
+
+<section class="step card" id="s8">
+<h2>Review and Confirm Undertaking</h2>
+<div class="notice"><b>Applicant:</b> MILA SANTOS<br><b>Business Name:</b> MILA’S HOMEMADE TREATS<br><b>Scope:</b> City/Municipality<br><b>Address:</b> 123 Sample Street, Demo City, Philippines</div>
+<label class="check"><input type="checkbox" id="undertake"> I confirm that the information shown is for this classroom simulation.</label>
+<div class="actions"><button class="btn secondary" onclick="go(7)">Back</button><button class="btn" onclick="nextIf('undertake',9)">Confirm</button></div>
+</section>
+
+<section class="step card" id="s9">
+<h2>Online Payment — Simulation</h2>
+<div class="notice"><b>DEMO PAYMENT ONLY.</b> No bank, card, e-wallet, or payment provider is connected.</div>
+<label>Demo Payment Method</label><select><option>Fictional Demo Wallet</option><option>Fictional Demo Card</option><option>Fictional Demo Bank</option></select>
+<label>Demo Amount</label><input value="₱100.00" readonly>
+<div class="actions"><button class="btn" onclick="go(10)">Simulate Successful Payment</button></div>
+</section>
+
+<section class="step card" id="s10">
+<h2>Registration Certificate</h2>
+<div class="success"><b>SIMULATED PAYMENT SUCCESSFUL</b><br>Demo transaction completed. No actual payment was made.</div>
+<div class="actions"><button class="btn" onclick="downloadCert()">Download Certificate</button></div>
+</section>
+
+<section class="step card" id="done">
+<div class="cert">
+<h3>DTI BUSINESS NAME REGISTRATION</h3><p><b>CLASSROOM SIMULATION CERTIFICATE</b></p>
+<div class="line">Business Name: MILA’S HOMEMADE TREATS</div>
+<div class="line">Owner: MILA SANTOS</div>
+<div class="line">Reference: DEMO-BNRS-2026-7K4P</div>
+<p class="small">THIS DOCUMENT IS FICTIONAL AND HAS NO LEGAL OR GOVERNMENT VALIDITY.</p>
+</div>
+<h1 style="text-align:center;margin-top:28px">DTI BUSINESS NAME REGISTRATION — SIMULATION COMPLETE</h1>
+<div class="notice"><b>Next Steps:</b><br>Proceed with LGU Business/Mayor’s Permit and BIR Registration.</div>
+<p style="text-align:center;font-weight:700">SIMULATION / DEMO — NOT AN ACTUAL GOVERNMENT TRANSACTION</p>
+</section>
+</main>
+<footer>Educational mockup for classroom presentation • No real registration, payment, or government submission</footer>
+<script>
+let current=1;
+const labels=["OPEN BNRS","TERMS","OWNER INFO","BUSINESS NAME","AVAILABILITY","REFERENCE","DETAILS","REVIEW","PAYMENT","CERTIFICATE"];
+function render(){document.querySelectorAll('.step').forEach(x=>x.classList.remove('active'));let id=current===11?'done':'s'+current;document.getElementById(id).classList.add('active');document.getElementById('progress').innerHTML=labels.map((x,i)=>`<span class="pill ${i+1<=current?'on':''}">STEP ${String(i+1).padStart(2,'0')}</span>`).join('');window.scrollTo({top:0,behavior:'smooth'});}
+function go(n){current=n;render()}
+function nextIf(id,n){if(document.getElementById(id).checked)go(n);else alert("Please check the demo confirmation box first.")}
+function downloadCert(){current=11;render();const text=`DTI BUSINESS NAME REGISTRATION\\nCLASSROOM SIMULATION CERTIFICATE\\n\\nBusiness Name: MILA’S HOMEMADE TREATS\\nOwner: MILA SANTOS\\nReference: DEMO-BNRS-2026-7K4P\\n\\nTHIS DOCUMENT IS FICTIONAL AND HAS NO LEGAL OR GOVERNMENT VALIDITY.`;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));a.download='DTI-Demo-Certificate.txt';a.click();}
+render();
+</script>
+</body></html>
