@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SEC Online Registration — Classroom Simulator</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f6f9;color:#17324d}
+.demo{position:fixed;top:0;left:0;right:0;background:#b42318;color:#fff;text-align:center;font-weight:700;font-size:13px;padding:8px;z-index:20}
+header{margin-top:34px;background:#123b63;color:#fff;padding:18px 6%;box-shadow:0 2px 8px #0002}
+.brand{font-size:22px;font-weight:700}.sub{font-size:12px;opacity:.9;margin-top:4px}
+main{max-width:1080px;margin:26px auto;padding:0 18px}.card{background:#fff;border-radius:10px;box-shadow:0 3px 14px #0001;padding:28px;margin-bottom:20px}
+h1{font-size:28px;margin-top:0}h2{font-size:21px;margin-top:0}.muted{color:#607487}.step{display:none}.step.active{display:block}
+.btn{background:#123b63;color:#fff;border:0;border-radius:6px;padding:12px 20px;font-weight:700;cursor:pointer}.btn:hover{background:#0d2d4b}.secondary{background:#64748b}.green{background:#087443}
+input,select,textarea{width:100%;padding:11px;border:1px solid #c7d2dc;border-radius:5px;margin:6px 0 15px;font-size:15px}label{font-weight:700;font-size:14px}
+.check{display:flex;gap:9px;align-items:flex-start;margin:15px 0}.check input{width:auto;margin:3px 0}
+.progress{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:18px}.pill{font-size:11px;padding:6px 9px;border-radius:20px;background:#dbe7ef}.pill.on{background:#123b63;color:#fff}
+.notice{padding:12px;border-left:4px solid #123b63;background:#eef6ff;margin:15px 0}.warning{padding:12px;border-left:4px solid #b42318;background:#fff5f5;margin:15px 0}.success{padding:15px;background:#ecfdf3;border:1px solid #a7f3d0;border-radius:7px;color:#065f46}
+.actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px}
+.box{border:1px solid #d8e0e8;padding:15px;border-radius:7px;background:#fafcff}.small{font-size:12px}
+.cert{border:5px double #123b63;padding:35px;text-align:center;background:#fffdf5}.cert h3{font-size:25px}.line{margin:12px auto;max-width:650px;border-bottom:1px solid #aaa;padding:8px}
+footer{text-align:center;color:#607487;padding:30px}
+@media(max-width:700px){.grid,.grid3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="demo">CLASSROOM SIMULATION / MOCK ONLY — NOT CONNECTED TO THE PHILIPPINE SEC</div>
+<header><div class="brand">Securities and Exchange Commission — Online Registration</div><div class="sub">EDUCATIONAL MOCK INTERFACE • No government application, payment, or submission is performed</div></header>
+
+<main>
+<div class="progress" id="progress"></div>
+
+<section class="step active card" id="s1">
+<h1>SEC Online Registration — Start Application</h1>
+<p class="muted">This simulator demonstrates a typical online SEC registration sequence for a classroom presentation.</p>
+<div class="warning"><b>IMPORTANT:</b> This is a fictional simulator. It does not access the SEC database and cannot create a real company, reserve a real name, accept payment, or submit an application.</div>
+<div class="grid">
+<div class="box"><b>Applicant type</b><p>Corporation / Partnership</p></div>
+<div class="box"><b>Mode</b><p>Classroom demonstration</p></div>
+</div>
+<div class="actions"><button class="btn" onclick="go(2)">Start Registration</button></div>
+</section>
+
+<section class="step card" id="s2">
+<h2>1. Select Entity Type</h2>
+<label>Type of Registration</label>
+<select id="entity">
+<option>Domestic Stock Corporation</option>
+<option>One Person Corporation (OPC)</option>
+<option>Non-Stock Corporation</option>
+<option>Partnership</option>
+</select>
+<label>Purpose of this application</label>
+<select><option>New Registration</option><option>Amendment (Demo)</option></select>
+<div class="notice">For the classroom flow, you may change the entity type and continue. All results remain simulated.</div>
+<div class="actions"><button class="btn secondary" onclick="go(1)">Back</button><button class="btn" onclick="go(3)">Continue</button></div>
+</section>
+
+<section class="step card" id="s3">
+<h2>2. Applicant / Contact Information</h2>
+<p class="muted">Enter fictional information. Do not use real IDs or sensitive information.</p>
+<div class="grid">
+<div><label>First Name</label><input id="first" value="MARIA"></div>
+<div><label>Last Name</label><input id="last" value="SANTOS"></div>
+</div>
+<div class="grid">
+<div><label>Email Address</label><input id="email" value="maria.demo@example.test"></div>
+<div><label>Mobile Number</label><input id="mobile" value="0917-000-0000"></div>
+</div>
+<div class="actions"><button class="btn secondary" onclick="go(2)">Back</button><button class="btn" onclick="go(4)">Continue</button></div>
+</section>
+
+<section class="step card" id="s4">
+<h2>3. Company / Partnership Name</h2>
+<label>Proposed Registered Name</label>
+<input id="company" value="SANTOS DIGITAL SOLUTIONS INC.">
+<label>Suffix / Entity Type</label>
+<select id="suffix"><option>INC.</option><option>CORPORATION</option><option>OPC</option><option>PARTNERSHIP</option></select>
+<label>Primary Business Purpose</label>
+<textarea id="purpose">Information technology services, software development, digital solutions, and related business activities.</textarea>
+<div class="actions"><button class="btn secondary" onclick="go(3)">Back</button><button class="btn" onclick="go(5)">Check Name Availability</button></div>
+</section>
+
+<section class="step card" id="s5">
+<h2>4. Name Verification — Simulated</h2>
+<div class="success"><b>SIMULATED RESULT:</b><br>The proposed name “<span id="nameResult"></span>” appears available in this classroom demonstration.</div>
+<p class="small muted">This does not search or reserve a real SEC name. A real application must use the official SEC system.</p>
+<div class="actions"><button class="btn" onclick="go(6)">Reserve / Proceed (Demo)</button></div>
+</section>
+
+<section class="step card" id="s6">
+<h2>5. Company Address and Contact Details</h2>
+<label>Principal Office Address</label>
+<input id="address" value="123 Sample Avenue, Barangay Demo, Quezon City, Philippines">
+<div class="grid">
+<div><label>City / Municipality</label><input id="city" value="Quezon City"></div>
+<div><label>Province</label><input id="province" value="Metro Manila"></div>
+</div>
+<label>Company Email</label><input id="companyEmail" value="company.demo@example.test">
+<div class="actions"><button class="btn secondary" onclick="go(5)">Back</button><button class="btn" onclick="go(7)">Continue</button></div>
+</section>
+
+<section class="step card" id="s7">
+<h2>6. Capital Structure</h2>
+<div class="grid3">
+<div><label>Authorized Capital</label><input id="authorized" value="1000000"></div>
+<div><label>Subscribed Capital</label><input id="subscribed" value="250000"></div>
+<div><label>Paid-up Capital</label><input id="paid" value="62500"></div>
+</div>
+<label>Number of Shares</label><input id="shares" value="10000">
+<label>Par Value per Share</label><input id="par" value="100">
+<div class="notice">These are sample figures only. For a real filing, capitalization must match the applicant's actual documents and applicable requirements.</div>
+<div class="actions"><button class="btn secondary" onclick="go(6)">Back</button><button class="btn" onclick="go(8)">Continue</button></div>
+</section>
+
+<section class="step card" id="s8">
+<h2>7. Incorporators / Partners</h2>
+<p class="muted">You can edit the sample names and positions for your presentation.</p>
+<div class="grid">
+<div><label>Incorporator 1</label><input id="inc1" value="MARIA SANTOS"></div>
+<div><label>Incorporator 2</label><input id="inc2" value="JUAN DELA CRUZ"></div>
+</div>
+<div class="grid">
+<div><label>Incorporator 3</label><input id="inc3" value="ANA REYES"></div>
+<div><label>Incorporator 4</label><input id="inc4" value="CARLO GARCIA"></div>
+</div>
+<div class="actions"><button class="btn secondary" onclick="go(7)">Back</button><button class="btn" onclick="go(9)">Continue</button></div>
+</section>
+
+<section class="step card" id="s9">
+<h2>8. Officers and Other Information</h2>
+<div class="grid">
+<div><label>President</label><input id="president" value="MARIA SANTOS"></div>
+<div><label>Corporate Secretary</label><input id="secretary" value="ANA REYES"></div>
+</div>
+<div class="grid">
+<div><label>Treasurer</label><input id="treasurer" value="JUAN DELA CRUZ"></div>
+<div><label>Business Activity</label><input id="activity" value="Digital and IT services"></div>
+</div>
+<label>Fiscal Year End</label><select id="fiscal"><option>December 31</option><option>June 30</option><option>Other (Demo)</option></select>
+<div class="actions"><button class="btn secondary" onclick="go(8)">Back</button><button class="btn" onclick="go(10)">Continue</button></div>
+</section>
+
+<section class="step card" id="s10">
+<h2>9. Upload Supporting Documents — Simulation</h2>
+<div class="box">
+<label>Articles of Incorporation / Partnership</label><input type="file" accept=".pdf,.jpg,.jpeg,.png">
+<label>By-Laws / Other Supporting Document</label><input type="file" accept=".pdf,.jpg,.jpeg,.png">
+</div>
+<div class="warning"><b>Demo only:</b> Files are not uploaded anywhere. The simulator only displays the file picker in your browser.</div>
+<div class="actions"><button class="btn secondary" onclick="go(9)">Back</button><button class="btn" onclick="go(11)">Continue to Review</button></div>
+</section>
+
+<section class="step card" id="s11">
+<h2>10. Review Application</h2>
+<div class="notice">
+<b>Entity:</b> <span id="rEntity"></span><br>
+<b>Company Name:</b> <span id="rCompany"></span><br>
+<b>Purpose:</b> <span id="rPurpose"></span><br>
+<b>Principal Address:</b> <span id="rAddress"></span><br>
+<b>President:</b> <span id="rPresident"></span><br>
+<b>Secretary:</b> <span id="rSecretary"></span><br>
+<b>Treasurer:</b> <span id="rTreasurer"></span><br>
+<b>Capital:</b> ₱<span id="rAuthorized"></span> authorized / ₱<span id="rSubscribed"></span> subscribed / ₱<span id="rPaid"></span> paid-up
+</div>
+<label class="check"><input type="checkbox" id="confirm"> I confirm that the information shown is for this classroom simulation only.</label>
+<div class="actions"><button class="btn secondary" onclick="go(10)">Back</button><button class="btn" onclick="nextIf('confirm',12)">Confirm Review</button></div>
+</section>
+
+<section class="step card" id="s12">
+<h2>11. Filing Fee / Payment — Simulation</h2>
+<div class="warning"><b>NO REAL PAYMENT.</b> This simulator is not connected to a bank, card, e-wallet, SEC payment facility, or government system.</div>
+<div class="box"><b>Simulated Application Fee</b><h2>₱1,000.00</h2><p class="small">Fictional classroom amount — not an official fee quotation.</p></div>
+<label>Demo Payment Method</label><select><option>Fictional Demo E-Wallet</option><option>Fictional Demo Bank</option><option>Fictional Demo Card</option></select>
+<div class="actions"><button class="btn" onclick="go(13)">Simulate Successful Payment</button></div>
+</section>
+
+<section class="step card" id="s13">
+<h2>12. Application Submission — Simulation</h2>
+<div class="success"><b>DEMO APPLICATION READY</b><br>Your fictional application is ready for simulated submission.</div>
+<p><b>Reference Number:</b> <span id="ref"></span></p>
+<div class="warning">Clicking the button below does NOT submit anything to the SEC. It only completes this classroom simulation.</div>
+<div class="actions"><button class="btn green" onclick="go(14)">Submit Application (DEMO)</button></div>
+</section>
+
+<section class="step card" id="s14">
+<h2>13. Registration Result — Simulation</h2>
+<div class="success"><b>SIMULATED APPLICATION APPROVED</b><br>The classroom application has been marked as successfully registered.</div>
+<div class="box">
+<p><b>Company:</b> <span id="resultCompany"></span></p>
+<p><b>Applicant:</b> <span id="resultApplicant"></span></p>
+<p><b>Reference:</b> <span id="resultRef"></span></p>
+</div>
+<div class="actions"><button class="btn" onclick="go(15)">View Certificate</button></div>
+</section>
+
+<section class="step card" id="s15">
+<div class="cert">
+<h3>SEC REGISTRATION</h3>
+<p><b>CLASSROOM SIMULATION CERTIFICATE</b></p>
+<div class="line">Registered Entity: <span id="certCompany"></span></div>
+<div class="line">Entity Type: <span id="certEntity"></span></div>
+<div class="line">Applicant: <span id="certApplicant"></span></div>
+<div class="line">Demo Reference: <span id="certReference"></span></div>
+<p class="small"><b>THIS DOCUMENT IS FICTIONAL AND HAS NO LEGAL OR GOVERNMENT VALIDITY.</b></p>
+</div>
+<h2 style="text-align:center;margin-top:28px">SEC ONLINE REGISTRATION — SIMULATION COMPLETE</h2>
+<div class="notice">For an actual business, registration may be followed by other government requirements such as LGU permits and BIR registration, depending on the entity and circumstances.</div>
+<div class="actions"><button class="btn" onclick="downloadSummary()">Download Demo Summary</button><button class="btn secondary" onclick="restart()">Start Over</button></div>
+</section>
+
+</main>
+<footer>Educational mockup • SEC name, logos, databases, payments, and government systems are not connected • Use fictional data only</footer>
+
+<script>
+let current=1;
+const labels=["START","ENTITY","APPLICANT","NAME","VERIFY","ADDRESS","CAPITAL","INCORPORATORS","OFFICERS","DOCUMENTS","REVIEW","PAYMENT","SUBMISSION","RESULT","CERTIFICATE"];
+let reference="SEC-DEMO-"+new Date().getFullYear()+"-A7K4P";
+
+function v(id){const e=document.getElementById(id);return e?e.value.trim():"";}
+function applicant(){return (v("first")+" "+v("last")).trim()||"DEMO APPLICANT";}
+function company(){return v("company")||"DEMO COMPANY INC.";}
+
+function sync(){
+ const set=(id,x)=>{const e=document.getElementById(id);if(e)e.textContent=x;};
+ set("nameResult",company());
+ set("rEntity",v("entity"));set("rCompany",company());set("rPurpose",v("purpose"));set("rAddress",v("address"));
+ set("rPresident",v("president"));set("rSecretary",v("secretary"));set("rTreasurer",v("treasurer"));
+ set("rAuthorized",v("authorized"));set("rSubscribed",v("subscribed"));set("rPaid",v("paid"));
+ set("ref",reference);set("resultCompany",company());set("resultApplicant",applicant());set("resultRef",reference);
+ set("certCompany",company());set("certEntity",v("entity"));set("certApplicant",applicant());set("certReference",reference);
+}
+function render(){
+ sync();
+ document.querySelectorAll(".step").forEach(x=>x.classList.remove("active"));
+ document.getElementById("s"+current).classList.add("active");
+ document.getElementById("progress").innerHTML=labels.map((x,i)=>'<span class="pill '+(i+1<=current?'on':'')+'">STEP '+String(i+1).padStart(2,"0")+"</span>").join("");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function go(n){if(n===13)reference="SEC-DEMO-"+new Date().getFullYear()+"-"+Math.random().toString(36).slice(2,7).toUpperCase();current=n;render();}
+function nextIf(id,n){if(document.getElementById(id).checked)go(n);else alert("Please check the demo confirmation box first.");}
+function restart(){current=1;render();}
+function downloadSummary(){
+ sync();
+ const text="SEC ONLINE REGISTRATION — CLASSROOM SIMULATION\n\nCompany: "+company()+"\nEntity: "+v("entity")+"\nApplicant: "+applicant()+"\nAddress: "+v("address")+"\nReference: "+reference+"\n\nFICTIONAL EDUCATIONAL DOCUMENT — NO LEGAL OR GOVERNMENT VALIDITY.";
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type:"text/plain"}));a.download="SEC-Demo-Registration-Summary.txt";a.click();
+}
+render();
+</script>
+</body>
+</html>
